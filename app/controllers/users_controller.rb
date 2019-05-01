@@ -1,3 +1,4 @@
+#=begin
 class UsersController < ApplicationController
 
   def show
@@ -13,6 +14,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      log_in @user #8.2.5 追加
     #if @user.false  #演習
       flash[:success] = "Welcome to the Sample App!"
       # 保存の成功をここで扱う。
@@ -32,3 +34,4 @@ class UsersController < ApplicationController
   
   
 end
+#=end

@@ -4,4 +4,7 @@ class ApplicationController < ActionController::Base
   def hello
     render html: "hello, world! & Chapter03"
   end
+
+  include SessionsHelper
+  
 end
