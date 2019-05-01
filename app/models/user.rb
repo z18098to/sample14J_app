@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  
+  attr_accessor :remember_token  
   #before_save { self.email = email.downcase }
   before_save { email.downcase! }  #cf 6.2.5 演習1
   
@@ -12,7 +12,8 @@ class User < ApplicationRecord
                     #uniqueness: true
                     uniqueness: { case_sensitive: false }
 has_secure_password
-validates :password, presence: true, length: { minimum: 6 }
+#validates :password, presence: true, length: { minimum: 6 }
+validates :password, presence: true, length: { minimum: 6 }, allow_nil: true #10.1.4
 
   # 渡された文字列のハッシュ値を返す
   def User.digest(string)
