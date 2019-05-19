@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :microposts, dependent: :destroy
+  
   attr_accessor :remember_token  
   #before_save { self.email = email.downcase }
   before_save { email.downcase! }  #cf 6.2.5 演習1
