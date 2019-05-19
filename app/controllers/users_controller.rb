@@ -67,14 +67,15 @@ class UsersController < ApplicationController
   
      # beforeアクション
 
-    # ログイン済みユーザーかどうか確認
-    def logged_in_user
-      unless logged_in?
-        store_location  #10.2.3
-        flash[:danger] = "Please log in."
-        redirect_to login_url
-      end
-    end
+#13.3.1で logged_in_user は　application_controller.rb　にひっこし
+#    # ログイン済みユーザーかどうか確認
+#    def logged_in_user
+#      unless logged_in?
+#        store_location  #10.2.3
+#        flash[:danger] = "Please log in."
+#        redirect_to login_url
+#      end
+#    end
   
       # 正しいユーザーかどうか確認
     def correct_user
