@@ -1,6 +1,6 @@
 #変更は　https://qiita.com/nobu0717/items/a34a896f6e7ad68dc54e　参照
 
-equire 'carrierwave/storage/abstract'
+require 'carrierwave/storage/abstract'
 require 'carrierwave/storage/file'
 require 'carrierwave/storage/fog'
 
