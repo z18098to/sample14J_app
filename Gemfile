@@ -18,7 +18,9 @@ gem 'jbuilder',     '2.7.0'
 
 group :development, :test do
   gem 'sqlite3', '1.3.13'
-  gem 'byebug',  '9.0.6', platform: :mri
+  #gem 'byebug',  '9.0.6', platform: :mri #13章heroku実装変更
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw] #13章heroku実装変更
 end
 
 group :development do
@@ -38,7 +40,7 @@ end
 
 group :production do
   gem 'pg', '0.20.0'
-  gem 'fog', '1.42'  #13.4.1追加
+  gem 'fog-aws'  #13.4.1追加 'fog', '1.42'⇒'
 end
 
 # Windows環境ではtzinfo-dataというgemを含める必要があります
