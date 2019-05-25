@@ -1,6 +1,7 @@
 #変更は　https://qiita.com/nobu0717/items/a34a896f6e7ad68dc54e　rails test でエラー
 
 #以下は変更前
+
 if Rails.env.production?
   CarrierWave.configure do |config|
     config.fog_credentials = {
