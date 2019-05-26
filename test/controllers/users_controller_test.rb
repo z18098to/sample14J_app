@@ -81,4 +81,15 @@ test "should get about" do
     assert_select 'a', text: 'delete', count: 0
   end
 
+  test "should redirect following when not logged in" do #14.1
+    get following_user_path(@user)
+    assert_redirected_to login_url
+  end
+
+  test "should redirect followers when not logged in" do #14.1
+    get followers_user_path(@user)
+    assert_redirected_to login_url
+  end
+
+
 end
