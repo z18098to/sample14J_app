@@ -10,9 +10,13 @@ class User < ApplicationRecord
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
   
-  attr_accessor :remember_token  
+  #attr_accessor :remember_token  
   #before_save { self.email = email.downcase }
-  before_save { email.downcase! }  #cf 6.2.5 演習1
+  #before_save { email.downcase! }  #cf 6.2.5 演習1
+  
+  attr_accessor :remember_token, :activation_token #11.1
+  before_save   :downcase_email #11.1
+  before_create :create_activation_digest #11.1
   
   validates :name,  presence: true, length: { maximum: 50 }
   #VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -97,7 +101,18 @@ class User < ApplicationRecord
     following.include?(other_user)
   end
    
-   
+    private
+
+    # メールアドレスをすべて小文字にする
+    def downcase_email
+      self.email = email.downcase
+    end
+
+    # 有効化トークンとダイジェストを作成および代入する
+    def create_activation_digest
+      self.activation_token  = User.new_token
+      self.activation_digest = User.digest(activation_token)
+    end 
    
 end
 
