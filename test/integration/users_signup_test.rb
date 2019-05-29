@@ -24,10 +24,12 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
                                          password_confirmation: "password" } }
     end
     follow_redirect!
-    assert_template 'users/show'
-    #assert_not flash.now[:success] != "Welcome to the Sample App!" # これでいいのかな？演習
-    
-    assert is_logged_in?
+
+#11.2.4　の作り込みのためコメントアウト    
+#    assert_template 'users/show'
+#    #assert_not flash.now[:success] != "Welcome to the Sample App!" # これでいいのかな？演習
+#    
+#    assert is_logged_in?
     
     assert_not flash.empty?
  
