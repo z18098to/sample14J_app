@@ -10,11 +10,21 @@ class UsersController < ApplicationController
 
   def index
     #@users = User.all
-    @users = User.paginate(page: params[:page]) #10.3.3
+    
+    #以下をスイッチ　（有効なユーザ表示or not)
+    #@users = User.paginate(page: params[:page]) #10.3.3
+    # or
+    ### @users = User.where(activated: FILL_IN).paginate(page: params[:page]) #11.3演習（ブランク） 有効なユーザだけ表示
+    @users = User.where(activated: true).paginate(page: params[:page]) #11.3演習 有効なユーザだけ表示
+    
   end
 
   def show
     @user = User.find(params[:id])
+    
+    redirect_to root_url and return unless @user.activated? #11.3演習 有効なユーザだけ表示（上を有効のときのい使用）
+    
+    
     #debugger
     
     @microposts = @user.microposts.paginate(page: params[:page])
@@ -36,8 +46,13 @@ class UsersController < ApplicationController
 #      #redirect_to @user 下と同じ意味
 #      redirect_to user_url(@user)
       
-      #11.2.4 　上をコメントアウトして以下を有効化
-      UserMailer.account_activation(@user).deliver_now
+#      #11.2.4 　上をコメントアウトして以下を有効化
+#      UserMailer.account_activation(@user).deliver_now
+#      flash[:info] = "Please check your email to activate your account."
+#      redirect_to root_url
+      
+      #11.3　上をコメントアウトして有効化
+      @user.send_activation_email
       flash[:info] = "Please check your email to activate your account."
       redirect_to root_url
       

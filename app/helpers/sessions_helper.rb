@@ -32,15 +32,28 @@ module SessionsHelper
 #    end
 #  end
   
-    # 記憶トークンcookieに対応するユーザーを返す
-  def current_user #9.1 以下を挿入し、上をコメント化
+#    # 記憶トークンcookieに対応するユーザーを返す
+#  def current_user #9.1 以下を挿入し、上をコメント化
+#    if (user_id = session[:user_id])
+#      @current_user ||= User.find_by(id: user_id)
+#    elsif (user_id = cookies.signed[:user_id])
+#      #raise       # テストがパスすれば、この部分がテストされていないことがわかる
+#      #例外発生部分を削除 リスト9.33
+#      user = User.find_by(id: user_id)
+#      if user && user.authenticated?(cookies[:remember_token])
+#        log_in user
+#        @current_user = user
+#      end
+#    end
+#  end
+  
+    # 現在ログイン中のユーザーを返す (いる場合) 11.3で上から入れ替え
+  def current_user
     if (user_id = session[:user_id])
       @current_user ||= User.find_by(id: user_id)
     elsif (user_id = cookies.signed[:user_id])
-      #raise       # テストがパスすれば、この部分がテストされていないことがわかる
-      #例外発生部分を削除 リスト9.33
       user = User.find_by(id: user_id)
-      if user && user.authenticated?(cookies[:remember_token])
+      if user && user.authenticated?(:remember, cookies[:remember_token]) #11.3　入れ替え行
         log_in user
         @current_user = user
       end
